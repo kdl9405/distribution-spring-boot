@@ -2,12 +2,16 @@ package com.aws.distribution.springboot.service.posts;
 
 import com.aws.distribution.springboot.domain.posts.Posts;
 import com.aws.distribution.springboot.domain.posts.PostsRepository;
+import com.aws.distribution.springboot.web.dto.PostsListResponseDto;
 import com.aws.distribution.springboot.web.dto.PostsResponseDto;
 import com.aws.distribution.springboot.web.dto.PostsSaveRequestDto;
 import com.aws.distribution.springboot.web.dto.PostsUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor // final로 선언된 모든 필드의 인자값을 갖는 생성자 생성
 @Service
@@ -34,4 +38,10 @@ public class PostsService {
 
         return new PostsResponseDto(entity);
     }
+
+    @Transactional(readOnly = true)
+    public List<PostsListResponseDto> findAllDese() {
+        return postsRepository.findAllByOrderByIdDesc().stream().map(PostsListResponseDto::new).collect(Collectors.toList());
+    }
+
 }
