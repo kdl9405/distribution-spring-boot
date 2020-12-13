@@ -22,15 +22,25 @@ public class IndexController {
     @GetMapping("/")
     public String index(Model model, @LoginUser SessionUser user) { // HttpSession.getAttribute("user") -> @LoginUser SessionUser user
 
-        model.addAttribute("posts", postsService.findAllDese());
-
     //    SessionUser user = (SessionUser) httpSession.getAttribute("user");
 
         if (user != null){
             model.addAttribute("userName", user.getName());
         }
 
-        return "index";
+        return "index2";
+    }
+
+    @GetMapping("/blog")
+    public String blog(Model model, @LoginUser SessionUser user) {
+
+        model.addAttribute("posts", postsService.findAllDese());
+
+        if (user != null){
+            model.addAttribute("userName", user.getName());
+        }
+
+        return "blog";
     }
 
     @GetMapping("/posts/save")
