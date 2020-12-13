@@ -31,5 +31,6 @@ dependencies {
     compile('com.h2database:h2') // 인메모리 RDB, 테스트용도로 사용
     compile('org.springframework.boot:spring-boot-starter-mustache')
     compile('org.springframework.boot:spring-boot-starter-oauth2-client')// 클라이언트 입장에서 소셜기능
+    compile('org.springframework.session:spring-session-jdbc') // 세션 저장소를 DB로 옮기기 위한 의존성 추가
    testCompile('org.springframework.boot:spring-boot-starter-test')
 }
