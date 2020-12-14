@@ -56,9 +56,4 @@ public class IndexController {
         return "posts-update";
     }
 
-
-    @GetMapping("/google8ce745eb75b31c15.html")
-    public String Google() {
-        return "google8ce745eb75b31c15";
-    }
 }
