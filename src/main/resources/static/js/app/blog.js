@@ -77,7 +77,7 @@ var blog = {
 
     search : function () {
             var data = {
-                query: $('#query').val()
+                query: $('#queryStr').val()
             };
             $.ajax({
                 type: 'POST',

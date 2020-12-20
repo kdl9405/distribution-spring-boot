@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.servlet.ServletException;
@@ -69,7 +70,7 @@ public class IndexController {
         return "posts-update";
     }
 
-    @GetMapping("/api/v1/posts/search")
+    @PostMapping("/api/v1/posts/search")
     public String search(@RequestBody String queryStr, Model model) throws ServletException, IOException {
 //        String searchValue = request.getParameter("query");
 
