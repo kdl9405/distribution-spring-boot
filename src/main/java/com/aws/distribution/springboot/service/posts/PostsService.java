@@ -28,38 +28,27 @@ public class PostsService {
     @Transactional
     public Long save(PostsSaveRequestDto requestDto) throws IOException, SolrServerException {
 
-        SolrInputDocument solrDoc = new SolrInputDocument();
-        solrDoc.addField("title", requestDto.getTitle());
-        solrDoc.addField("content",requestDto.getContent());
-        solrDoc.addField("author", requestDto.getAuthor());
-
-        Collection<SolrInputDocument> solrDocs = new ArrayList<SolrInputDocument>();
-        solrDocs.add(solrDoc);
-
-        SolrJDriver.solr.add(solrDocs);
-        SolrJDriver.solr.commit();
-
         return postsRepository.save(requestDto.toEntity()).getId();
     }
 
     @Transactional
-    public Long update(Long id, PostsUpdateRequestDto requestDto){
-        Posts posts = postsRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id = "+ id));
+    public Long update(Long id, PostsUpdateRequestDto requestDto) {
+        Posts posts = postsRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id = " + id));
 
         posts.update(requestDto.getTitle(), requestDto.getContent());
 
-        return  id;
+        return id;
     }
 
     @Transactional
-    public void delete(Long id){
-        Posts posts = postsRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id = "+ id));
+    public void delete(Long id) {
+        Posts posts = postsRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id = " + id));
 
         postsRepository.delete(posts);
     }
 
-    public PostsResponseDto findById(Long id){
-        Posts entity = postsRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id = "+ id));
+    public PostsResponseDto findById(Long id) {
+        Posts entity = postsRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id = " + id));
 
         return new PostsResponseDto(entity);
     }
