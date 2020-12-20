@@ -12,7 +12,7 @@ public class SolrConfig {
     @Bean
     public SolrClient solrClient(){
 
-        String urlString = "http://raysblog.tk:8983/solr/#/test";
+        String urlString = "http://raysblog.tk:8983/solr/test";
         HttpSolrClient solr = new HttpSolrClient.Builder(urlString).build();
         solr.setParser(new XMLResponseParser());
         return solr;
