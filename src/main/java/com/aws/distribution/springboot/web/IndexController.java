@@ -69,7 +69,7 @@ public class IndexController {
     public String search(HttpServletRequest request, Model model) throws ServletException, IOException {
         String searchValue = request.getParameter("query");
 
-        String url = "http://raysblog.tk:8983/solr/test";
+        String url = "http://raysblog.tk:8983/solr/#/test";
         SolrClient solr = new HttpSolrClient.Builder(url).build();
 
         SolrQuery query = new SolrQuery();
