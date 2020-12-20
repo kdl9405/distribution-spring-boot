@@ -2,15 +2,21 @@ package com.aws.distribution.springboot.service.posts;
 
 import com.aws.distribution.springboot.domain.posts.Posts;
 import com.aws.distribution.springboot.domain.posts.PostsRepository;
+import com.aws.distribution.springboot.search.SolrJDriver;
 import com.aws.distribution.springboot.web.dto.PostsListResponseDto;
 import com.aws.distribution.springboot.web.dto.PostsResponseDto;
 import com.aws.distribution.springboot.web.dto.PostsSaveRequestDto;
 import com.aws.distribution.springboot.web.dto.PostsUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
+import org.apache.solr.client.solrj.SolrServerException;
+import org.apache.solr.common.SolrInputDocument;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor // final로 선언된 모든 필드의 인자값을 갖는 생성자 생성
@@ -20,7 +26,19 @@ public class PostsService {
     private final PostsRepository postsRepository;
 
     @Transactional
-    public Long save(PostsSaveRequestDto requestDto){
+    public Long save(PostsSaveRequestDto requestDto) throws IOException, SolrServerException {
+
+        SolrInputDocument solrDoc = new SolrInputDocument();
+        solrDoc.addField("title", requestDto.getTitle());
+        solrDoc.addField("content",requestDto.getContent());
+        solrDoc.addField("author", requestDto.getAuthor());
+
+        Collection<SolrInputDocument> solrDocs = new ArrayList<SolrInputDocument>();
+        solrDocs.add(solrDoc);
+
+        SolrJDriver.solr.add(solrDocs);
+        SolrJDriver.solr.commit();
+
         return postsRepository.save(requestDto.toEntity()).getId();
     }
 

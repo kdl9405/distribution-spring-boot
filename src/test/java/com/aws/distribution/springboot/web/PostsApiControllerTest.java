@@ -3,10 +3,18 @@ package com.aws.distribution.springboot.web;
 
 import com.aws.distribution.springboot.domain.posts.Posts;
 import com.aws.distribution.springboot.domain.posts.PostsRepository;
+import com.aws.distribution.springboot.search.SolrJDriver;
 import com.aws.distribution.springboot.web.dto.PostsSaveRequestDto;
 import com.aws.distribution.springboot.web.dto.PostsUpdateRequestDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.solr.client.solrj.SolrClient;
+import org.apache.solr.client.solrj.SolrQuery;
+import org.apache.solr.client.solrj.SolrServerException;
+import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.solr.common.SolrDocument;
+import org.apache.solr.common.SolrDocumentList;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,6 +29,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.io.IOException;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -41,6 +50,9 @@ public class PostsApiControllerTest {
 
     @Autowired
     private PostsRepository postsRepository;
+
+    @Autowired
+    private SolrClient solrClient;
 
 
     @Autowired
@@ -105,6 +117,30 @@ public class PostsApiControllerTest {
         List<Posts> all = postsRepository.findAll();
         assertThat(all.get(0).getTitle()).isEqualTo(expectedTitle);
         assertThat(all.get(0).getContent()).isEqualTo(expectedContent);
+
+    }
+
+
+    @Test
+    public void 기본_쿼리_검색(){
+
+        SolrQuery query = new SolrQuery();
+        query.set("q", "*:*");
+
+        QueryResponse response = null;
+        try {
+            response = SolrJDriver.solr.query(query);
+        } catch (SolrServerException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        SolrDocumentList doList = response.getResults();
+
+        Assert.assertEquals(2,doList.size());
+
+
 
     }
 }
