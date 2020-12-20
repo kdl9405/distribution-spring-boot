@@ -29,28 +29,28 @@ public class PostsService {
     @Transactional
     public Long save(PostsSaveRequestDto requestDto) {
 
-        SolrInputDocument solrDoc = new SolrInputDocument();
-        solrDoc.addField("title", requestDto.getTitle());
-        solrDoc.addField("content",requestDto.getContent());
-        solrDoc.addField("author", requestDto.getAuthor());
-
-        Collection<SolrInputDocument> solrDocs = new ArrayList<SolrInputDocument>();
-        solrDocs.add(solrDoc);
-
-        try {
-            SolrJDriver.solr.add(solrDocs);
-        } catch (SolrServerException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            SolrJDriver.solr.commit();
-        } catch (SolrServerException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        SolrInputDocument solrDoc = new SolrInputDocument();
+//        solrDoc.addField("title", requestDto.getTitle());
+//        solrDoc.addField("content",requestDto.getContent());
+//        solrDoc.addField("author", requestDto.getAuthor());
+//
+//        Collection<SolrInputDocument> solrDocs = new ArrayList<SolrInputDocument>();
+//        solrDocs.add(solrDoc);
+//
+//        try {
+//            SolrJDriver.solr.add(solrDocs);
+//        } catch (SolrServerException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        try {
+//            SolrJDriver.solr.commit();
+//        } catch (SolrServerException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
         return postsRepository.save(requestDto.toEntity()).getId();
     }

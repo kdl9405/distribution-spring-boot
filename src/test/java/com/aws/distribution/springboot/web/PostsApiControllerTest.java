@@ -121,26 +121,26 @@ public class PostsApiControllerTest {
     }
 
 
-    @Test
-    public void 기본_쿼리_검색(){
-
-        SolrQuery query = new SolrQuery();
-        query.set("q", "*:*");
-
-        QueryResponse response = null;
-        try {
-            response = SolrJDriver.solr.query(query);
-        } catch (SolrServerException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        SolrDocumentList doList = response.getResults();
-
-        Assert.assertEquals(2,doList.size());
-
-
-
-    }
+//    @Test
+//    public void 기본_쿼리_검색(){
+//
+//        SolrQuery query = new SolrQuery();
+//        query.set("q", "*:*");
+//
+//        QueryResponse response = null;
+//        try {
+//            response = SolrJDriver.solr.query(query);
+//        } catch (SolrServerException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//        SolrDocumentList doList = response.getResults();
+//
+//        Assert.assertEquals(2,doList.size());
+//
+//
+//
+//    }
 }
