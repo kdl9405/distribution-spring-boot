@@ -13,6 +13,7 @@ import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocumentList;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.RequestDispatcher;
@@ -49,7 +50,7 @@ public class PostsApiController {
     }
 
     @GetMapping("/api/v1/posts/search")
-    public void search(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+    public String search(HttpServletRequest request, Model model) throws ServletException, IOException{
         String searchValue = request.getParameter("query");
 
         String url = "http://raysblog.tk:8983/solr/test";
@@ -61,13 +62,15 @@ public class PostsApiController {
             QueryResponse rep = solr.query(query);
             SolrDocumentList docs = rep.getResults();
 
-            request.setAttribute("posts", docs);
-            RequestDispatcher rd = request.getRequestDispatcher("blog-search.mustache");
-            rd.forward(request,response);
+            model.addAttribute("posts", docs);
+//            RequestDispatcher rd = request.getRequestDispatcher("blog-search.mustache");
+//            rd.forward(request,response);
+
         } catch (SolrServerException e) {
             e.printStackTrace();
         }
 
+        return "blog-search";
 
     }
 }
