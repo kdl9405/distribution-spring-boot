@@ -72,13 +72,21 @@ public class IndexController {
     public String search(HttpServletRequest request, Model model) throws ServletException, IOException {
         String searchValue = request.getParameter("query");
 
+        System.out.println(">>>>>>>>>>>>>>>>>>>searchvalue"+searchValue);
+
         SolrQuery query = new SolrQuery();
         query.set("q","content:"+searchValue);
+
+
+        System.out.println(">>>>>>>>>>>>>>>>>>>queryq"+query.get("q"));
 
         QueryResponse rep = null;
         try{
             rep = solrClient.query(query);
             SolrDocumentList docs = rep.getResults();
+
+            System.out.println(">>>>>>>>>>>>>>>>>>>rep"+rep);
+
 
             model.addAttribute("posts", docs);
 //            RequestDispatcher rd = request.getRequestDispatcher("blog-search.mustache");
