@@ -5,12 +5,21 @@ import com.aws.distribution.springboot.config.auth.dto.SessionUser;
 import com.aws.distribution.springboot.service.posts.PostsService;
 import com.aws.distribution.springboot.web.dto.PostsResponseDto;
 import lombok.RequiredArgsConstructor;
+import org.apache.solr.client.solrj.SolrClient;
+import org.apache.solr.client.solrj.SolrQuery;
+import org.apache.solr.client.solrj.SolrServerException;
+import org.apache.solr.client.solrj.impl.HttpSolrClient;
+import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.solr.common.SolrDocumentList;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 
 @RequiredArgsConstructor
 @Controller
@@ -54,6 +63,31 @@ public class IndexController {
         model.addAttribute("posts",dto);
 
         return "posts-update";
+    }
+
+    @GetMapping("/api/v1/posts/search")
+    public String search(HttpServletRequest request, Model model) throws ServletException, IOException {
+        String searchValue = request.getParameter("query");
+
+        String url = "http://raysblog.tk:8983/solr/test";
+        SolrClient solr = new HttpSolrClient.Builder(url).build();
+
+        SolrQuery query = new SolrQuery();
+        query.setQuery("content:"+searchValue);
+        try{
+            QueryResponse rep = solr.query(query);
+            SolrDocumentList docs = rep.getResults();
+
+            model.addAttribute("posts", docs);
+//            RequestDispatcher rd = request.getRequestDispatcher("blog-search.mustache");
+//            rd.forward(request,response);
+
+        } catch (SolrServerException e) {
+            e.printStackTrace();
+        }
+
+        return "blog-search";
+
     }
 
 }

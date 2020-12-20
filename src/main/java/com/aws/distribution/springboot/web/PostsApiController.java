@@ -49,28 +49,5 @@ public class PostsApiController {
         return postsService.findById(id);
     }
 
-    @GetMapping("/api/v1/posts/search")
-    public String search(HttpServletRequest request, Model model) throws ServletException, IOException{
-        String searchValue = request.getParameter("query");
 
-        String url = "http://raysblog.tk:8983/solr/test";
-        SolrClient solr = new HttpSolrClient.Builder(url).build();
-
-        SolrQuery query = new SolrQuery();
-        query.setQuery("content:"+searchValue);
-        try{
-            QueryResponse rep = solr.query(query);
-            SolrDocumentList docs = rep.getResults();
-
-            model.addAttribute("posts", docs);
-//            RequestDispatcher rd = request.getRequestDispatcher("blog-search.mustache");
-//            rd.forward(request,response);
-
-        } catch (SolrServerException e) {
-            e.printStackTrace();
-        }
-
-        return "blog-search";
-
-    }
 }
