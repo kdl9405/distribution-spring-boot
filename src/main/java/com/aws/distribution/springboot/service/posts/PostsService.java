@@ -26,7 +26,6 @@ public class PostsService {
 
     private final PostsRepository postsRepository;
 
-    @SneakyThrows
     @Transactional
     public Long save(PostsSaveRequestDto requestDto) {
 
@@ -45,7 +44,13 @@ public class PostsService {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        SolrJDriver.solr.commit();
+        try {
+            SolrJDriver.solr.commit();
+        } catch (SolrServerException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         return postsRepository.save(requestDto.toEntity()).getId();
     }
