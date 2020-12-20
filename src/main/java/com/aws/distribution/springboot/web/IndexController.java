@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -69,13 +70,14 @@ public class IndexController {
     }
 
     @GetMapping("/api/v1/posts/search")
-    public String search(HttpServletRequest request, Model model) throws ServletException, IOException {
-        String searchValue = request.getParameter("query");
+    public String search(@RequestBody String queryStr, Model model) throws ServletException, IOException {
+//        String searchValue = request.getParameter("query");
 
-        System.out.println(">>>>>>>>>>>>>>>>>>>searchvalue"+searchValue);
+
+        System.out.println(">>>>>>>>>>>>>>>>>>>searchvalue"+queryStr);
 
         SolrQuery query = new SolrQuery();
-        query.set("q","content:"+searchValue);
+        query.set("q","content:"+queryStr);
 
 
         System.out.println(">>>>>>>>>>>>>>>>>>>queryq"+query.get("q"));

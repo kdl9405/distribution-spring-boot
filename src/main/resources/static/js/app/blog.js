@@ -12,6 +12,10 @@ var blog = {
         $('#btn-delete').on('click', function () {
             _this.delete();
         });
+
+        $('#btn-search').on('click', function () {
+                    _this.search();
+                });
     },
     save : function () {
         var data = {
@@ -69,7 +73,19 @@ var blog = {
         }).fail(function (error) {
             alert(JSON.stringify(error));
         });
-    }
+    },
+
+    search : function () {
+            var data = {
+                query: $('#query').val()
+            };
+            $.ajax({
+                type: 'POST',
+                url: '/api/v1/posts/search',
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(data)
+            });
 
 
 };
