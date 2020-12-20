@@ -75,7 +75,7 @@ public class IndexController {
 //        String searchValue = request.getParameter("query");
 
 
-        System.out.println(">>>>>>>>>>>>>>>>>>>searchvalue"+queryStr);
+        System.out.println(">>>>>>>>>>>>>>>>>>>queryStr  "+queryStr);
 
         SolrQuery query = new SolrQuery();
         query.set("q","content:"+queryStr);
