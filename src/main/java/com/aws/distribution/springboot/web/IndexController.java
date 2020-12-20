@@ -11,6 +11,7 @@ import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocumentList;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +27,9 @@ import java.io.IOException;
 public class IndexController {
 
     private final PostsService postsService;
-  //  private final HttpSession httpSession;
+
+    @Autowired
+    private SolrClient solrClient;
 
     @GetMapping("/")
     public String index(Model model, @LoginUser SessionUser user) { // HttpSession.getAttribute("user") -> @LoginUser SessionUser user
@@ -69,13 +72,12 @@ public class IndexController {
     public String search(HttpServletRequest request, Model model) throws ServletException, IOException {
         String searchValue = request.getParameter("query");
 
-        String url = "http://raysblog.tk:8983/solr/#/test";
-        SolrClient solr = new HttpSolrClient.Builder(url).build();
-
         SolrQuery query = new SolrQuery();
-        query.setQuery("content:"+searchValue);
+        query.set("q","content:"+searchValue);
+
+        QueryResponse rep = null;
         try{
-            QueryResponse rep = solr.query(query);
+            rep = solrClient.query(query);
             SolrDocumentList docs = rep.getResults();
 
             model.addAttribute("posts", docs);
