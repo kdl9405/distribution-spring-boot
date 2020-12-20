@@ -27,8 +27,6 @@ public class PostsApiController {
 
     private final PostsService postsService;
 
-    private final SolrJDriver solrJDriver;
-
     @PostMapping("/api/v1/posts")
     public Long save(@RequestBody PostsSaveRequestDto requestDto){
         return postsService.save(requestDto);
