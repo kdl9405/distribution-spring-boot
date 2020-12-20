@@ -36,6 +36,7 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-oauth2-client')// 클라이언트 입장에서 소셜기능
     compile('org.springframework.session:spring-session-jdbc') // 세션 저장소를 DB로 옮기기 위한 의존성 추가
     compile("org.mariadb.jdbc:mariadb-java-client")
+    compile ('org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4:1.16')
     compile group: 'org.apache.solr', name: 'solr-core', version: '8.7.0'
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile("org.springframework.security:spring-security-test")
