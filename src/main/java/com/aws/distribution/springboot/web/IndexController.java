@@ -71,7 +71,7 @@ public class IndexController {
     }
 
     @PostMapping("/api/v1/posts/search")
-    public String search(@RequestBody String queryStr, Model model) throws ServletException, IOException {
+    public String search(String queryStr, Model model) throws ServletException, IOException {
 //        String searchValue = request.getParameter("query");
 
 

@@ -13,10 +13,7 @@ var blog = {
             _this.delete();
         });
 
-        $('#btn-search').on('click', function () {
-                    _this.search();
-                });
-    },
+          },
     save : function () {
         var data = {
             title: $('#title').val(),
@@ -74,19 +71,6 @@ var blog = {
             alert(JSON.stringify(error));
         });
     },
-
-    search : function () {
-            var data = {
-                query: $('#queryStr').val()
-            };
-            $.ajax({
-                type: 'POST',
-                url: '/api/v1/posts/search',
-                dataType: 'json',
-                contentType: 'application/json; charset=utf-8',
-                data: JSON.stringify(data)
-            });
-
 
 };
 

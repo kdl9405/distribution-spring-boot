@@ -80,9 +80,9 @@
 
                         <h3 class="sidebar-title">Search</h3>
                         <div class="sidebar-item search-form">
-                            <form>
-                                <input type="text" id = "queryStr">
-                                <button type="button" id = "btn-search"><i class="icofont-search"></i></button>
+                            <form action="/api/v1/posts/search">
+                                <input type="text" name = "queryStr">
+                                <button type="submit" ><i class="icofont-search"></i></button>
                             </form>
 
                         </div><!-- End sidebar search formn-->
