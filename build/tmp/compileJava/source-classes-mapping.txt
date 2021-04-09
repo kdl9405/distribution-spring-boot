@@ -1,0 +1,2 @@
+com/aws/distribution/springboot/Application.java
+ com.aws.distribution.springboot.Application

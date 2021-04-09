@@ -1,0 +1,2 @@
+com/aws/distribution/springboot/web/HelloControllerTest.java
+ com.aws.distribution.springboot.web.HelloControllerTest
